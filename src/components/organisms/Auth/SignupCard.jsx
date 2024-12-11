@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,6 +14,8 @@ export const SignupCard = () => {
         username: '',
         confirmPassword: '',
     });
+
+    const navigate = useNavigate();
 
     return(
         <Card className='w-full h-full border-none'>
@@ -58,7 +61,7 @@ export const SignupCard = () => {
                         disabled={false}
                         size='lg'
                         type='submit'
-                        className='w-full bg-[#611F75]'
+                        className='w-full bg-slack'
                     >
                         Sign Up
                     </Button>
@@ -69,7 +72,7 @@ export const SignupCard = () => {
                     className='text-s text-muted-foreground mt-4'
                 >
                     Alread have an account? 
-                    <span className='text-sky-600 hover:underline cursor-pointer'> Sign In</span>
+                    <span className='text-sky-600 hover:underline cursor-pointer' onClick={()=> navigate('/auth/signin')}> Sign In</span>
                 </p>
             </CardContent>
         </Card>
