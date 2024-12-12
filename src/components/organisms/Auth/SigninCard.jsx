@@ -1,4 +1,4 @@
-import { LucideLoader2, TriangleAlert } from 'lucide-react';
+import { LucideLoader, TriangleAlert } from 'lucide-react';
 import { IoShieldCheckmark } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,7 +32,7 @@ export const SigninCard = ({ signinForm, setSigninForm, onSigninFormSubmit, vali
                     <div className='bg-green-200 px-4 py-2 rounded-md flex items-center gap-x-2 text-green-600 text-sm mb-5'>
                         <IoShieldCheckmark className='size-5' />
                         <p>Successfully signed up, You will bw redirected to the home page shortly</p>
-                        <LucideLoader2 className='animate-spin ml-2' />
+                        <LucideLoader className='animate-spin ml-2' />
                     </div>
                 )}
             </CardHeader>
