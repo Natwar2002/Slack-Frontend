@@ -13,16 +13,16 @@ export const useSignin = () => {
             console.log('Successfully signed in: ', response);
             const userObject = JSON.stringify(response);
             localStorage.setItem('user', userObject);
-            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('token', response.token);
 
             setAuth({
-                token: response.data.token,
-                user: response.data,
+                token: response.token,
+                user: response,
                 isLoading: false
             });
 
             toast({
-                title: 'SUccessfully signed in',
+                title: 'Successfully signed in',
                 message: 'You will be redirected to the home page shortly',
                 type: 'success'
             });
