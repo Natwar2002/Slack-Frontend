@@ -32,7 +32,8 @@ export const useSignin = () => {
             toast({
                 title: 'Failed to sign in',
                 message: error.message,
-                type: 'success'
+                type: 'success',
+                variant: 'destructive'
             });
         }
     });
