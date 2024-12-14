@@ -1,16 +1,19 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
-import { LogOutIcon, Settings } from 'lucide-react';
+import { LogOutIcon, Pencil, Settings } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/hooks/context/useAuth';
+import { useCreateWorkspaceModal } from '@/hooks/context/useCreateWorkspaceModal';
 import { useToast } from '@/hooks/use-toast';
 
 export const UserButton = () => {
     const { auth, logout } = useAuth();
     const { toast } = useToast();
     const navigate = useNavigate();
+    const { setOpenCreateWorkspaceModal } = useCreateWorkspaceModal();
+
     async function handleLogout() {
         await logout();
         toast({
@@ -18,6 +21,10 @@ export const UserButton = () => {
             type: 'success'
         });
         navigate('/auth/signin');
+    }
+
+    function openCreateWorkspaceModal () {
+        setOpenCreateWorkspaceModal(true);
     }
 
     return(
@@ -30,6 +37,10 @@ export const UserButton = () => {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent>
+                <DropdownMenuItem onClick={openCreateWorkspaceModal}>
+                    <Pencil />
+                    Create Workspace
+                </DropdownMenuItem>
                 <DropdownMenuItem>
                     <Settings className='size-4 mr-2 h-10' />
                     Settings

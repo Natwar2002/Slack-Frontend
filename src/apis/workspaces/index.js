@@ -7,7 +7,7 @@ export const createWorkspaceRequest = async ({ name, description, token }) => {
                 'x-access-token': token
             }
         });
-        return response.data;
+        return response?.data?.data;
     } catch (error) {
         console.error('Error in create workspace request');
         throw error.response.data;
@@ -21,7 +21,7 @@ export const fetchWorkspaceRequest = async ({ token }) => {
                 'x-access-token': token
             }
         });
-        return response.data.data;
+        return response?.data?.data;
     } catch (error) {
         console.error('Error in fetching workspaces request');
         throw error.response.data;
