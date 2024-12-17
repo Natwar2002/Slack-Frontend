@@ -30,15 +30,15 @@ export const UserButton = () => {
     return(
         <DropdownMenu>
             <DropdownMenuTrigger className='outline-none relative'>
-                <Avatar className='size-10 hover:opacity-60 transition'>
-                    <AvatarImage src={auth?.user?.avatar} className='w-[30px] h-[30px]'/>
+                <Avatar className='size-10 hover:opacity-65 transition'>
+                    <AvatarImage src={auth?.user?.avatar} className='w-[35px] h-[35px]' />
                     <AvatarFallback>{auth?.user?.username[0].toUpperCase()}</AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
 
             <DropdownMenuContent>
                 <DropdownMenuItem onClick={openCreateWorkspaceModal}>
-                    <Pencil />
+                    <Pencil className='size-4 mr-2 h-10' />
                     Create Workspace
                 </DropdownMenuItem>
                 <DropdownMenuItem>
