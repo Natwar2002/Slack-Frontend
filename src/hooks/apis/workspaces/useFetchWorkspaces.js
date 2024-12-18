@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchWorkspaceRequest } from '@/apis/workspaces';
 import { useAuth } from '@/hooks/context/useAuth';
 
-export const useFetchWorkspace = () => {
+export const useFetchWorkspaces = () => {
     const { auth } = useAuth();
     const { isFetching, isSuccess, error, data: workspaces } = useQuery({
         queryFn: () => fetchWorkspaceRequest({ token: auth?.token }),

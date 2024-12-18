@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { UserButton } from '@/components/atoms/UserButton/UserButton';
-import { useFetchWorkspace } from '@/hooks/apis/workspaces/useFetchWorkspace';
+import { useFetchWorkspaces } from '@/hooks/apis/workspaces/useFetchWorkspaces';
 
 export const Home = () => {
 
     const navigate = useNavigate();
-    const { isFetching, workspaces } = useFetchWorkspace();
+    const { isFetching, workspaces } = useFetchWorkspaces();
     useEffect(()=> {
         if(isFetching) return;
         console.log('Workspaces: ', workspaces);
