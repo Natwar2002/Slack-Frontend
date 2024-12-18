@@ -11,10 +11,10 @@ export const useGetWorkspaceById = (id) => {
         staleTime: 10000
     });
 
-    return (
+    return {
         isFetching,
         isSuccess,
         error,
         workspace
-    );
+    };
 };

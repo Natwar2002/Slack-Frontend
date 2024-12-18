@@ -3,9 +3,14 @@ import { BellIcon, HomeIcon, MessageSquareCodeIcon, MoreHorizontalIcon } from 'l
 import { UserButton } from '@/components/atoms/UserButton/UserButton';
 import { SidebarButton } from '@/components/molecules/SidebarButton/SidebarButton';
 
+import { WorkspaceSwitcher } from './WorkspaceSwitcher';
+
 export const WorkspaceSidebar = () => {
     return (
         <aside className="w-[70px] h-full bg-slack-dark flex flex-col gap-y-4 items-center pt-[10px] pb-[5px]">
+
+            <WorkspaceSwitcher />
+
             <SidebarButton 
                 Icon={HomeIcon} 
                 label='Home'
@@ -13,7 +18,7 @@ export const WorkspaceSidebar = () => {
 
             <SidebarButton 
                 Icon={MessageSquareCodeIcon} 
-                label='Dms'
+                label='DMs'
             />
 
             <SidebarButton 
