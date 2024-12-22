@@ -1,14 +1,41 @@
 import { TrashIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useDeleteWorkspace } from '@/hooks/apis/workspaces/useDeleteWorkspace';
 import { useWorkspacePreferencesModal } from '@/hooks/context/useWorkspacePreferencesModal';
+import { useToast } from '@/hooks/use-toast';
 
 export const WorkspacePreferencesModal = () => {
 
-    const { initialValue, openPreferences, setOpenPreferences } = useWorkspacePreferencesModal();
+    const { toast } = useToast();
+    const [workspaceId, setWorkspaceId] = useState(null);
+
+    const { initialValue, openPreferences, setOpenPreferences, workspace } = useWorkspacePreferencesModal();
+    const { deleteWorkspaceMutation } = useDeleteWorkspace(workspaceId);
 
     function handleClose() {
         setOpenPreferences(false);
+    }
+
+    useEffect(() => {
+        setWorkspaceId(workspace?._id);
+    }, [workspace]);
+
+    async function handleDelete() {
+        try {
+            await deleteWorkspaceMutation();
+            toast({
+                title: 'Workspace delete succcessfully',
+                message: 'Workspace delete succcessfully'
+            });
+        } catch (error) {
+            console.log('Error in deleting workspace: ', error);
+            toast({
+                title: 'Error in deleting workspace',
+                message: 'Error in deleting workspace',
+            });
+        }
     }
 
     return (
@@ -32,10 +59,13 @@ export const WorkspacePreferencesModal = () => {
                             {initialValue}
                         </p>
                     </div>
-                    <button className='flex items-center gap-x-2 px-5 py-4 bg-white rounded-lg cursor-pointer hover:bg-gray-50'>
+                    <button
+                        onClick={handleDelete} 
+                        className='flex items-center border gap-x-2 px-5 py-4 bg-white rounded-lg cursor-pointer hover:bg-gray-50'
+                    >
                         <TrashIcon className='size-5'/>
                         <p className='text-sm font-semibold'>
-                        Delete Workspace 
+                            Delete Workspace 
                         </p>
                     </button>
                 </div>

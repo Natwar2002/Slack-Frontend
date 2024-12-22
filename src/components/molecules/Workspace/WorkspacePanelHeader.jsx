@@ -1,4 +1,5 @@
 import { ChevronDownIcon, ListFilterIcon, SquarePenIcon } from 'lucide-react';
+import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -7,11 +8,14 @@ import { useWorkspacePreferencesModal } from '@/hooks/context/useWorkspacePrefer
 
 export const WorkspacePanelHeader = ({ workspace }) => {
 
+    const { setOpenPreferences, setInitialValue, setWorkspace } = useWorkspacePreferencesModal(); 
     const workspaceMembers = workspace?.members;
     const { auth } = useAuth();
     const isLoggedInUserAdminOfWorkspace = workspaceMembers?.find(member => member.memberId._id === auth?.user?._id && member.role === 'admin');
 
-    const { setOpenPreferences, setInitialValue } = useWorkspacePreferencesModal(); 
+    useEffect(() => {
+        setWorkspace(workspace);
+    }, []);
     
     return (
         <div className="flex items-center justify-between px-4 h-[50px] gap-0.5">
@@ -45,8 +49,8 @@ export const WorkspacePanelHeader = ({ workspace }) => {
                             <DropdownMenuItem 
                                 className='cursor-pointer py-2' 
                                 onClick={() => {
-                                    setOpenPreferences(true);
                                     setInitialValue(workspace?.name);
+                                    setOpenPreferences(true);
                                 }}
                             >
                                 Prefrences
@@ -63,10 +67,10 @@ export const WorkspacePanelHeader = ({ workspace }) => {
             {/* Todo: Add tooltip */}
             <div className='flex items-center gap-0.5'>
                 <Button variant='transparent' size='iconSm'>
-                    <ListFilterIcon size={5} />
+                    <ListFilterIcon className='size-5' />
                 </Button>
                 <Button variant='transparent' size='iconSm'>
-                    <SquarePenIcon size={5} />
+                    <SquarePenIcon className='size-5' />
                 </Button>
             </div>
         </div>
