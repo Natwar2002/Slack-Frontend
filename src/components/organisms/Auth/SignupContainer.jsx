@@ -47,7 +47,7 @@ export const SignupContainer = () => {
         if(isSuccess) {
             navigate('/auth/signin'); 
        }
-       }, 3000);
+       }, 1000);
     }, [isSuccess, navigate]);
 
     return (

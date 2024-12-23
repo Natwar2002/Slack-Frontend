@@ -37,15 +37,15 @@ export const UserButton = () => {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent className='bg-slate-100 px-3 py-2 rounded-md'>
-                <DropdownMenuItem onClick={openCreateWorkspaceModal}>
+                <DropdownMenuItem onClick={openCreateWorkspaceModal} className='cursor-pointer'>
                     <Pencil className='size-4 mr-2 h-10' />
                     Create Workspace
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem className='cursor-pointer'>
                     <Settings className='size-4 mr-2 h-10' />
                     Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleLogout}>
+                <DropdownMenuItem onClick={handleLogout} className='cursor-pointer'>
                     <LogOutIcon className='size-4 mr-2 h-10' />
                     Logout
                 </DropdownMenuItem>
