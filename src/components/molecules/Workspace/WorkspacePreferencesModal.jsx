@@ -10,6 +10,7 @@ import { useDeleteWorkspace } from '@/hooks/apis/workspaces/useDeleteWorkspace';
 import { useUpdateWorkspace } from '@/hooks/apis/workspaces/useUpdateWorkspace';
 import { useWorkspacePreferencesModal } from '@/hooks/context/useWorkspacePreferencesModal';
 import { useToast } from '@/hooks/use-toast';
+import { useConfirm } from '@/hooks/useConfirm';
 
 export const WorkspacePreferencesModal = () => {
 
@@ -23,6 +24,10 @@ export const WorkspacePreferencesModal = () => {
     const { deleteWorkspaceMutation } = useDeleteWorkspace(workspaceId);
     const { isPending, updateWorkspaceMutation } = useUpdateWorkspace(workspaceId);
 
+    const { confirmation, ConfirmDialog } = useConfirm({ title: 'Do you want to delete the workspace?', message: 'This action can not be undone.' });
+    const { confirmation: updateConfirmaion, ConfirmDialog: UpdateDialog } = useConfirm({ title: 'Do you want to Update the workspace?', message: 'This action can not be undone.' });
+
+
     function handleClose() {  
         setOpenPreferences(false);
     }
@@ -34,6 +39,9 @@ export const WorkspacePreferencesModal = () => {
 
     async function handleDelete() {
         try {
+            const ok = await confirmation();
+            console.log('Confirmation received');
+            if(!ok) return;
             await deleteWorkspaceMutation();
             navigate('/home');
             queryClient.invalidateQueries('fetchWorkspaces');
@@ -54,6 +62,9 @@ export const WorkspacePreferencesModal = () => {
     async function handleFormSubmit(e) {
         e.preventDefault();
         try {
+            const ok = await updateConfirmaion();
+            console.log('Confirmation received');
+            if(!ok) return;
             await updateWorkspaceMutation(renameValue);
             queryClient.invalidateQueries(`fetchWorkspaceById-${workspaceId}`);
             setOpenPreferences(false);
@@ -71,78 +82,82 @@ export const WorkspacePreferencesModal = () => {
     }
 
     return (
-        <Dialog open={openPreferences} onOpenChange={handleClose}>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>{initialValue}</DialogTitle>
-                </DialogHeader>
+        <>
+            <ConfirmDialog />
+            <UpdateDialog />
+            <Dialog open={openPreferences} onOpenChange={handleClose}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>{initialValue}</DialogTitle>
+                    </DialogHeader>
 
-                <div className='px-4 pb-4 flex flex-col gap-y-2'>
-                    <Dialog open={editOpen} onOpenChange={setEditOpen}>
-                        <DialogTrigger>
-                            <div className='px-5 py-4 bg-white rounded-lg border cursor-pointer hover:bg-gray-50'>
-                                <div className='flex items-center justify-between'>
-                                    <p className='font-semibold text-sm'>
-                                        Workspace Name
-                                    </p>
-                                    <p className='font-semibold text-sm hover:underline'>
-                                        Edit
+                    <div className='px-4 pb-4 flex flex-col gap-y-2'>
+                        <Dialog open={editOpen} onOpenChange={setEditOpen}>
+                            <DialogTrigger>
+                                <div className='px-5 py-4 bg-white rounded-lg border cursor-pointer hover:bg-gray-50'>
+                                    <div className='flex items-center justify-between'>
+                                        <p className='font-semibold text-sm'>
+                                            Workspace Name
+                                        </p>
+                                        <p className='font-semibold text-sm hover:underline'>
+                                            Edit
+                                        </p>
+                                    </div>
+                                    <p className='text-sm'>
+                                        {initialValue}
                                     </p>
                                 </div>
-                                <p className='text-sm'>
-                                    {initialValue}
-                                </p>
-                            </div>
-                        </DialogTrigger>
+                            </DialogTrigger>
 
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Rename Workspace</DialogTitle>
-                            </DialogHeader>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Rename Workspace</DialogTitle>
+                                </DialogHeader>
 
-                            <form className='space-y-4' onSubmit={handleFormSubmit}>
-                                <Input  
-                                    value={renameValue}
-                                    onChange={(e) => setRenameValue(e.target.value)}
-                                    required
-                                    autofocus
-                                    minLength={3}
-                                    maxLength={50}
-                                    disabled={isPending}
-                                    placeholder='Workspace name e.g. Design Team'
-                                />
-                                <DialogFooter>
-                                    <DialogClose>
+                                <form className='space-y-4' onSubmit={handleFormSubmit}>
+                                    <Input  
+                                        value={renameValue}
+                                        onChange={(e) => setRenameValue(e.target.value)}
+                                        required
+                                        autofocus
+                                        minLength={3}
+                                        maxLength={50}
+                                        disabled={isPending}
+                                        placeholder='Workspace name e.g. Design Team'
+                                    />
+                                    <DialogFooter>
+                                        <DialogClose>
+                                            <Button
+                                                variant='outline'
+                                                disabled={isPending}
+                                            >
+                                                Cancel
+                                            </Button>
+                                        </DialogClose>
                                         <Button
-                                            variant='outline'
+                                            type='submit'
                                             disabled={isPending}
                                         >
-                                            Cancel
+                                            Save
                                         </Button>
-                                    </DialogClose>
-                                    <Button
-                                        type='submit'
-                                        disabled={isPending}
-                                    >
-                                        Save
-                                    </Button>
-                                </DialogFooter>
-                            </form>
-                        </DialogContent>
-                    </Dialog>
+                                    </DialogFooter>
+                                </form>
+                            </DialogContent>
+                        </Dialog>
 
-                    <button
-                        onClick={handleDelete} 
-                        className='flex items-center border gap-x-2 px-5 py-4 bg-white rounded-lg cursor-pointer hover:bg-gray-50'
-                    >
-                        <TrashIcon className='size-5'/>
-                        <p className='text-sm font-semibold'>
-                            Delete Workspace 
-                        </p>
-                    </button>
-                </div>
+                        <button
+                            onClick={handleDelete} 
+                            className='flex items-center border gap-x-2 px-5 py-4 bg-white rounded-lg cursor-pointer hover:bg-gray-50'
+                        >
+                            <TrashIcon className='size-5'/>
+                            <p className='text-sm font-semibold'>
+                                Delete Workspace 
+                            </p>
+                        </button>
+                    </div>
 
-            </DialogContent>
-        </Dialog>
+                </DialogContent>
+            </Dialog>
+        </>
     );
 };
