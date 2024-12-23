@@ -14,7 +14,7 @@ export const WorkspacePreferencesModal = () => {
     const { initialValue, openPreferences, setOpenPreferences, workspace } = useWorkspacePreferencesModal();
     const { deleteWorkspaceMutation } = useDeleteWorkspace(workspaceId);
 
-    function handleClose() {
+    function handleClose() {  
         setOpenPreferences(false);
     }
 
