@@ -9,7 +9,7 @@ export const WorkspaceLayout = ({ children }) => {
             <WorkspaceNavbar />
             <div className="flex h-[calc(100vh-40px)]">
                 <WorkspaceSidebar />
-                <ResizablePanelGroup direction='horizontal' autoSaveId='workspaceResize'>
+                <ResizablePanelGroup direction='horizontal' autoSaveId={'workspaceResize'}>
                     <ResizablePanel
                         defaultSize={20}
                         minSize={20}
