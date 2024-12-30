@@ -1,9 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { LogOutIcon, Pencil, Settings } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/hooks/context/useAuth';
 import { useCreateWorkspaceModal } from '@/hooks/context/useCreateWorkspaceModal';
 import { useToast } from '@/hooks/use-toast';
