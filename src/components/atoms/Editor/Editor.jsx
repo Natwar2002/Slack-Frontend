@@ -1,3 +1,5 @@
+import 'quill/dist/quill.snow.css';
+
 import Quill from 'quill';
 import { useEffect, useRef, useState } from 'react';
 
@@ -59,9 +61,12 @@ export const Editor = ({ variant = 'create', onSubmit, onCancel, placeholder, di
 
     return(
         <div className="flex flex-col">
-            <div className="flex flex-col border-slate-300 rounded-md overflow-hidden focus-within:shadow-sm focus-within:border-slate-400 bg-white transition focus-within:">
-                <div ref={containerRef} />
+            <div className="flex flex-col border-slate-300 rounded-md overflow-hidden focus-within:shadow-sm focus-within:border-slate-400 bg-white">
+                <div className='h-full ql-custom' ref={containerRef} />
             </div>
+            <p className='p-2 text-[10px] text-muted-foreground flex justify-end'>
+                <strong>Shift + return </strong> &nbsp; to add a new line
+            </p>
         </div>
     );
 };
