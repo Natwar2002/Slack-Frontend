@@ -1,14 +1,23 @@
 import { LoaderIcon, TriangleAlertIcon } from 'lucide-react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ChannelHeader } from '@/components/molecules/Channel/ChannelHeader';
 import { ChatInput } from '@/components/molecules/ChatInput/ChatInput';
 import { useGetChannelById } from '@/hooks/apis/channels/useGetChannelById';
+import { useSocket } from '@/hooks/context/useSocket';
 
 export const Channel = () => {
 
+    const { joinChannel } = useSocket();
     const { channelId } = useParams();
     const { channelDetails, isFetching, isError } = useGetChannelById(channelId);
+
+    useEffect(()=>{
+        if(!isFetching && !isError) {
+            joinChannel(channelId);
+        }
+    }, [isFetching, isError, joinChannel, channelId]);
 
     if(isFetching){
         return(
