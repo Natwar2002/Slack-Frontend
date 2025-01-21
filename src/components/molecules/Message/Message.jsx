@@ -2,6 +2,14 @@ import { MessageRenderer } from '@/components/atoms/MessageRenderer/MessageRende
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export const Message = ({ authorImage, authorName, createdAt, body }) => {
+
+    const date = new Date(createdAt);
+    const formattedTime = date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
+
     return(
         <div className="flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60 group relative">
             <div className="flex items-center gap-2">
@@ -19,14 +27,15 @@ export const Message = ({ authorImage, authorName, createdAt, body }) => {
                         </button>
                         <span>&nbsp;&nbsp;</span>
                         <button className='text-xs text-muted-foreground hover:underline'>
-                            {createdAt}
+                            {formattedTime}
                         </button>
                     </div>
+
+                    <MessageRenderer value={body} />
+                    {/* Image goes here if there any */}
+
                 </div>
 
-                <MessageRenderer value={body} />
-                {/* Image goes here if there any */}
-                
             </div>
         </div>
     );
