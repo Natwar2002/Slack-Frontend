@@ -77,7 +77,7 @@ export const WorkspacePanelHeader = ({ workspace }) => {
 
                 {/* Todo: Add tooltip */}
                 <div className='flex items-center gap-0.5'>
-                    <Button variant='transparent' size='iconSm' onClick={()=> setOpenPreferences(true)}>
+                    <Button variant='transparent' size='iconSm'>
                         <ListFilterIcon className='size-5' />
                     </Button>
                     <Button variant='transparent' size='iconSm'>

@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { LoaderIcon, TriangleAlertIcon } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ChannelHeader } from '@/components/molecules/Channel/ChannelHeader';
@@ -19,6 +19,7 @@ export const Channel = () => {
     const { channelDetails, isFetching, isError } = useGetChannelById(channelId);
     const { messages, isSuccess } = useGetChannelMessages(channelId);
     const { setMessageList, messageList } = useChannelMessages();
+    const messageListContainerRef = useRef(null);
 
     useEffect(()=>{
         if(!isFetching && !isError) {
@@ -37,6 +38,12 @@ export const Channel = () => {
             setMessageList(messages);
         }
     }, [isSuccess, messages, setMessageList]);
+
+    useEffect(() => {
+        if(messageListContainerRef.current) {
+            messageListContainerRef.current.scrollTop = messageListContainerRef.current.scrollHeight;
+        }
+    }, [messageList]);
 
     if(isFetching){
         return(
@@ -59,11 +66,12 @@ export const Channel = () => {
         <div className='flex flex-col h-full'>
             <ChannelHeader name={channelDetails?.name} />
 
-            {messageList?.map((message) => {
-                return <Message key={message?._id} body={message?.body} authorImage={message?.senderId?.avatar} authorName={message?.senderId?.username} createdAt={message?.createdAt || 'Just now'} />;
-            })}
+            <div className='flex-1 overflow-y-auto p-5 gap-y-2' ref={messageListContainerRef}>
+                {messageList?.map((message) => {
+                    return <Message key={message?._id} body={message?.body} authorImage={message?.senderId?.avatar} authorName={message?.senderId?.username} createdAt={message?.createdAt || 'Just now'} />;
+                })}
+            </div>
 
-            <div className='flex-1' />
             <ChatInput />
         </div>
     );

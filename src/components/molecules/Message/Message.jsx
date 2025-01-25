@@ -15,7 +15,7 @@ export const Message = ({ authorImage, authorName, createdAt, body }) => {
             <div className="flex items-center gap-2">
                 <button>
                     <Avatar>
-                        <AvatarImage className='rounded-md' src={authorImage} />
+                        <AvatarImage className='rounded-md h-12 w-12' src={authorImage} />
                         <AvatarFallback className='rounded-md text-sm bg-sky-500 text-white'>{authorName.charAt(0).toUpperCase()}</AvatarFallback>
                     </Avatar>
                 </button>
