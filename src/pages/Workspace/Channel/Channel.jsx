@@ -68,7 +68,14 @@ export const Channel = () => {
 
             <div className='flex-1 overflow-y-auto p-5 gap-y-2' ref={messageListContainerRef}>
                 {messageList?.map((message) => {
-                    return <Message key={message?._id} body={message?.body} authorImage={message?.senderId?.avatar} authorName={message?.senderId?.username} createdAt={message?.createdAt || 'Just now'} />;
+                    return <Message 
+                                key={message?._id} 
+                                body={message?.body} 
+                                authorImage={message?.senderId?.avatar} 
+                                authorName={message?.senderId?.username} 
+                                createdAt={message?.createdAt || 'Just now'}
+                                image={message?.image}
+                            />;
                 })}
             </div>
 

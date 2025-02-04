@@ -42,12 +42,14 @@ export const WorkspacePanel = () => {
                     icon={MessageSquareTextIcon} 
                     id='threads'
                     variant='active'
+                    disabled={true}
                 />
                 <SidebarItem  
                     label='Drafts & Sends' 
                     icon={SendHorizonalIcon} 
                     id='drafts'
                     variant='default'
+                    disabled={true}
                 />
             </div>
 

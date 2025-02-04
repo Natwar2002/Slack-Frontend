@@ -1,7 +1,8 @@
+import { MessageImageThumbnail } from '@/components/atoms/MessageImageThumbnail/MessageImageThumbnail';
 import { MessageRenderer } from '@/components/atoms/MessageRenderer/MessageRenderer';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-export const Message = ({ authorImage, authorName, createdAt, body }) => {
+export const Message = ({ authorImage, authorName, createdAt, body, image }) => {
 
     const date = new Date(createdAt);
     const formattedTime = date.toLocaleTimeString('en-US', {
@@ -33,6 +34,7 @@ export const Message = ({ authorImage, authorName, createdAt, body }) => {
 
                     <MessageRenderer value={body} />
                     {/* Image goes here if there any */}
+                    {image && <MessageImageThumbnail url={image} />}
 
                 </div>
 

@@ -18,7 +18,7 @@ const sidebarItemsVariants = cva(
 );
 
 
-export const SidebarItem = ({ label, icon: Icon, variant, id }) => {
+export const SidebarItem = ({ label, icon: Icon, variant, id, disabled }) => {
 
     const { workspaceId } = useParams();
 
@@ -27,6 +27,7 @@ export const SidebarItem = ({ label, icon: Icon, variant, id }) => {
             variant='transparent'
             size='sm'
             className={cn(sidebarItemsVariants({ variant }))}
+            disabled={disabled}
         >
             <Link to={`/workspaces/${workspaceId}/channels/${id}`} className='flex items-center gap-1.5' >
                 <Icon className='size-3.5 mr-1' />

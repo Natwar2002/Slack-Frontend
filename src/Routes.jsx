@@ -20,6 +20,7 @@ export const AppRoutes = () => {
           <Route path='/workspaces/:workspaceId' element={<ProtectedRoute><WorkspaceLayout>Workspace</WorkspaceLayout></ProtectedRoute>} />
           <Route path='/workspaces/:workspaceId/channels/:channelId' element={<ProtectedRoute><WorkspaceLayout><Channel /></WorkspaceLayout></ProtectedRoute>} />
           <Route path='/workspaces/join/:workspaceId' element={<JoinPage />} />
+          <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path='*' element={<NotFound />} />
         </Routes>
     );
