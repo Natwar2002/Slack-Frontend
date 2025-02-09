@@ -1,6 +1,6 @@
 import 'quill/dist/quill.snow.css';
 
-import { ImageIcon } from 'lucide-react';
+import { ImageIcon, XIcon } from 'lucide-react';
 import Quill from 'quill';
 import { useEffect, useRef, useState } from 'react';
 import { MdSend } from 'react-icons/md';
@@ -13,7 +13,9 @@ import { Hint } from '../Hint/Hint';
 export const Editor = ({ variant = 'create', onSubmit, onCancel, placeholder, disabled, defaultValue }) => {
 
     const [isToolbarVisible, setIsToolbarVisible] = useState(false);
+    const [image, setImage] = useState(null);
 
+    const imageInputRef = useRef(null);
     const containerRef = useRef();
     const placeholderRef = useRef();
     const defaultValueRef = useRef();
@@ -38,7 +40,7 @@ export const Editor = ({ variant = 'create', onSubmit, onCancel, placeholder, di
             modules: {
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'],
-                    ['link', 'image'],
+                    ['link'],
                     [{ list: 'ordered' }, { list: 'bullet' }],
                     ['clean']
                 ],
@@ -75,10 +77,24 @@ export const Editor = ({ variant = 'create', onSubmit, onCancel, placeholder, di
         <div className="flex flex-col">
             <div className="flex flex-col border-slate-300 rounded-md overflow-hidden focus-within:shadow-sm focus-within:border-slate-400 bg-white">
                 <div className='h-full ql-custom' ref={containerRef} />
+                {
+                    image && (
+                        <div className='relative size-[60px] flex items-center justify-center group/image'>
+                            <button 
+                                className='hidden group-hover/image:flex rounded-full bg-black/70 hover:bg-black absolute -top-2.5 -right-2.5 text-white size-6 z-[5] border-2 border-white items-center justify-center'
+                                onClick={() => {
+                                    setImage(null);
+                                    imageInputRef.current.value = '';
+                                }}
+                            >
+                                <XIcon className='size-4' />
+                            </button>
+                            <img src={URL.createObjectURL(image)} className='rounded-xl overflow-hidden border object-cover' />
+                        </div>
+                    )
+                }
                 <div className='flex px-2 pb-2 z-[5]'>
-                    <Hint 
-                        label={isToolbarVisible ? 'Show toolbar' : 'Hide toolbar'}
-                    > 
+                    <Hint label={isToolbarVisible ? 'Show toolbar' : 'Hide toolbar'}> 
                         <Button 
                             size='iconSm' 
                             onClick={toggleToolbar}
@@ -89,18 +105,25 @@ export const Editor = ({ variant = 'create', onSubmit, onCancel, placeholder, di
                         </Button>
                     </Hint>
 
-                    <Hint 
-                        label={'Image'}
-                    >
+                    <Hint label={'Image'}>
                         <Button 
                             size='iconSm' 
-                            onClick={() => {}}
+                            onClick={() => {
+                                imageInputRef?.current?.click();
+                            }}
                             variant='ghost'
                             disabled={false}
                         >
                             <ImageIcon className='size-4' />
                         </Button>
                     </Hint>
+
+                    <input 
+                        type='file' 
+                        className='hidden' 
+                        ref={imageInputRef}
+                        onChange={(e) => setImage(e.target.files[0])} 
+                    />
 
                     <Hint
                         label={'Send message'}
@@ -110,8 +133,10 @@ export const Editor = ({ variant = 'create', onSubmit, onCancel, placeholder, di
                             className='ml-auto bg-[#007a6a] hover:bg-[#007a6a]/80 text-white'
                             onClick={() => {
                                 const messageContent = JSON.stringify(quillRef.current?.getContents());
-                                onSubmit({ body:  messageContent });
+                                onSubmit({ body:  messageContent, image });
                                 quillRef?.current?.setText('');
+                                setImage(null);
+                                imageInputRef.current.value = '';
                             }}
                             disabled={false}
                         >
