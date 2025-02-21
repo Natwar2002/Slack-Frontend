@@ -35,7 +35,7 @@ export const Channel = () => {
     useEffect(() => {
         if(isSuccess) {
             console.log('Messages fetched successfully');
-            setMessageList(messages);
+            setMessageList(messages.reverse());
         }
     }, [isSuccess, messages, setMessageList]);
 

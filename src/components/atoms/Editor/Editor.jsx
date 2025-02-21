@@ -17,8 +17,8 @@ export const Editor = ({ variant = 'create', onSubmit, onCancel, placeholder, di
 
     const imageInputRef = useRef(null);
     const containerRef = useRef();
-    const placeholderRef = useRef();
-    const defaultValueRef = useRef();
+    const placeholderRef = useRef(placeholder);
+    const defaultValueRef = useRef(defaultValue);
     const quillRef = useRef();
 
     function toggleToolbar() {
